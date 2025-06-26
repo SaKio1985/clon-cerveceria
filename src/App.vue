@@ -1,30 +1,39 @@
+<!-- src/App.vue -->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "vue";
+import { RouterView } from "vue-router";
+import NavbarComponent from "./components/NavbarComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
+
+const navigationLinks = ref([
+  // Objeto 1: Inicio
+  { name: "Inicio", href: "#inicio" },
+
+  // Objeto 2: La Carta (con sus hijos dentro)
+  {
+    // <-- Faltaba esta llave de apertura {
+    name: "La carta",
+    href: "/carta", // Enlace principal
+    children: [
+      { name: "Barriles", href: "/carta/barriles" },
+      { name: "Botellas", href: "/carta/botellas" },
+      { name: "Cervezas de temporada", href: "/carta/temporada" },
+      { name: "Para comer", href: "/carta/para-comer" },
+    ],
+  }, // <-- Y esta de cierre }
+
+  // Objeto 3: Sobre Nosotros (cambié el nombre para que coincida con el original)
+  { name: "Nosotros", href: "#nosotros" },
+]);
 </script>
 
+<!-- Tu <template> no necesita cambios -->
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <NavbarComponent :nav-items="navigationLinks" />
+  <main>
+    <RouterView />
+  </main>
+  <FooterComponent />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
