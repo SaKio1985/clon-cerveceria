@@ -1,8 +1,13 @@
-// vite.config.js
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import path from "path"; // <-- 1. Importa el módulo 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  // 2. Añade esta sección 'resolve'
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });

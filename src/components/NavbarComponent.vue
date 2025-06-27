@@ -60,11 +60,7 @@ onUnmounted(() => {
       <div class="flex items-center justify-between h-20">
         <!-- === LOGO === -->
         <RouterLink to="/" @click="closeDropdown">
-          <img
-            class="h-12 w-auto"
-            src="/public/Logo.avif"
-            alt="Logo La Cerve"
-          />
+          <img class="h-12 w-auto" src="/Logo.avif" alt="Logo La Cerve" />
         </RouterLink>
 
         <!-- === NAVEGACIÓN DE ESCRITORIO === -->

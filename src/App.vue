@@ -2,8 +2,8 @@
 <script setup>
 import { ref } from "vue";
 import { RouterView } from "vue-router";
-import NavbarComponent from "./components/NavbarComponent.vue";
-import FooterComponent from "./components/FooterComponent.vue";
+import NavbarComponent from "@/components/NavbarComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 
 const navigationLinks = ref([
   // Objeto 1: Inicio
