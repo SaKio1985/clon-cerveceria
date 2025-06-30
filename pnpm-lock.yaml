@@ -11,6 +11,9 @@ importers:
       vue:
         specifier: ^3.5.17
         version: 3.5.17
+      vue-easy-lightbox:
+        specifier: ^1.19.0
+        version: 1.19.0(vue@3.5.17)
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.17)
@@ -1105,6 +1108,12 @@ packages:
       yaml:
         optional: true
 
+  vue-easy-lightbox@1.19.0:
+    resolution: {integrity: sha512-YxLXgjEn91UF3DuK1y8u3Pyx2sJ7a/MnBpkyrBSQkvU1glzEJASyAZ7N+5yDpmxBQDVMwCsL2VmxWGIiFrWCgA==}
+    engines: {node: '>=14.18.3'}
+    peerDependencies:
+      vue: ^3.0.0
+
   vue-eslint-parser@10.1.4:
     resolution: {integrity: sha512-EIZvCukIEMHEb3mxOKemtvWR1fcUAdWWAgkfyjmRHzvyhrZvBvH9oz69+thDIWhGiIQjZnPkCn8yHqvjM+a9eg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -2037,6 +2046,10 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.4.2
       lightningcss: 1.30.1
+
+  vue-easy-lightbox@1.19.0(vue@3.5.17):
+    dependencies:
+      vue: 3.5.17
 
   vue-eslint-parser@10.1.4(eslint@9.29.0(jiti@2.4.2)):
     dependencies:

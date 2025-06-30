@@ -1,40 +1,62 @@
 <!-- src/views/HomePage.vue -->
+
 <script setup>
 import { ref } from "vue";
 
-// La data que antes estaba en tu script global, ahora vive aquí encapsulada.
+// --- DATOS PARA LA SECCIÓN "NUESTRA HISTORIA" ---
+// IMPORTANTE: Asegúrate de tener estas imágenes en 'src/assets/images/'
+// Si la carpeta no existe, créala.
+import aboutImage1 from "@/assets/images/about-1.avif";
+import aboutImage2 from "@/assets/images/about-2.avif";
+import aboutImage3 from "@/assets/images/about-3.avif";
+
+const historyItems = ref([
+  {
+    text: "El 14 de Marzo del 1996 abrimos las puertas de la Cevecería Gilber's, desde entonces hemos trabajado con innumerables marcas de cerveza, consiguiendo ofrecer a nuestros clientes un alto nivel de calidad y satisfacción.",
+    image: aboutImage1,
+  },
+  {
+    text: "Han pasado muchos años y hoy por hoy podemos estar orgullosos de ser una de las mejores cervecerías de Salamanca y casi seguro la mas antigua de la ciudad....",
+    image: aboutImage2,
+  },
+  {
+    text: "Ofrecemos un ambiente agradable y de trato familiar con una amplia carta a base de sandwiches, hamburguesas de ternera, raciones, especialidades....",
+    image: aboutImage3,
+  },
+]);
+
+// --- DATOS PARA LA SECCIÓN "CARTA" ---
 const menuItems = ref([
   {
     name: "Hamburguesas",
     description:
       "Jugosas hamburguesas de ternera preparadas con ingredientes frescos y acompañadas de patatas.",
-    icon: "fas fa-hamburger", // <-- Esto estará roto temporalmente
+    icon: "fas fa-hamburger", // Esto se reemplazará por un SVG o imagen
   },
   {
     name: "Sandwiches",
     description:
       "Una amplia variedad de sandwiches gourmet para todos los gustos y preferencias.",
-    icon: "fas fa-bread-slice", // <-- Esto estará roto temporalmente
+    icon: "fas fa-bread-slice", // Esto se reemplazará por un SVG o imagen
   },
   {
     name: "Raciones",
     description:
       "Deliciosas raciones tradicionales perfectas para compartir entre amigos.",
-    icon: "fas fa-utensils", // <-- Esto estará roto temporalmente
+    icon: "fas fa-utensils", // Esto se reemplazará por un SVG o imagen
   },
   {
     name: "Cervezas",
     description:
       "Más de 50 variedades de cerveza nacional e internacional, siempre bien fría.",
-    icon: "fas fa-beer", // <-- Esto estará roto temporalmente
+    icon: "fas fa-beer", // Esto se reemplazará por un SVG o imagen
   },
 ]);
 
-// La lógica para hacer scroll a una sección
+// --- LÓGICA DE SCROLL ---
 const scrollToSection = (elementId) => {
   const element = document.querySelector(elementId);
   if (element) {
-    // El -80 es para compensar la altura del navbar fijo
     const offsetTop = element.offsetTop - 80;
     window.scrollTo({
       top: offsetTop,
@@ -46,7 +68,9 @@ const scrollToSection = (elementId) => {
 
 <template>
   <div>
-    <!-- Hero Section -->
+    <!-- ======================= -->
+    <!-- === HERO SECTION === -->
+    <!-- ======================= -->
     <section
       id="inicio"
       class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-amber-900"
@@ -86,24 +110,51 @@ const scrollToSection = (elementId) => {
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ======================= -->
+    <!-- === ABOUT SECTION (NUESTRA HISTORIA) === -->
+    <!-- ======================= -->
     <section id="nosotros" class="py-20 bg-white">
       <div class="container mx-auto px-4">
-        <div class="max-w-6xl mx-auto">
-          <div class="text-center mb-16">
-            <h2
-              class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-            >
-              Nuestra Historia
-            </h2>
-            <div class="w-24 h-1 beer-gradient mx-auto rounded-full"></div>
+        <!-- Header de Sección -->
+        <div class="text-center mb-16">
+          <h2
+            class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          >
+            Nuestra Historia
+          </h2>
+          <div class="w-24 h-1 beer-gradient mx-auto rounded-full"></div>
+        </div>
+
+        <!-- Contenedor para los items de la historia -->
+        <div class="space-y-16">
+          <div
+            v-for="(item, index) in historyItems"
+            :key="index"
+            class="flex flex-col lg:flex-row items-center gap-x-12"
+          >
+            <!-- Texto -->
+            <div class="lg:w-1/2" :class="{ 'lg:order-last': index % 2 !== 0 }">
+              <p class="text-lg text-gray-700 leading-relaxed">
+                {{ item.text }}
+              </p>
+            </div>
+
+            <!-- Imagen -->
+            <div class="lg:w-1/2 mt-8 lg:mt-0">
+              <img
+                :src="item.image"
+                alt="Interior de la cervecería"
+                class="rounded-lg shadow-xl w-full h-auto object-cover"
+              />
+            </div>
           </div>
-          <!-- ... El resto del contenido de la sección "nosotros" va aquí ... -->
         </div>
       </div>
     </section>
 
-    <!-- Menu Preview -->
+    <!-- ======================= -->
+    <!-- === MENU PREVIEW SECTION === -->
+    <!-- ======================= -->
     <section id="carta" class="py-20 bg-gray-50">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -114,9 +165,7 @@ const scrollToSection = (elementId) => {
           </h2>
           <div class="w-24 h-1 beer-gradient mx-auto rounded-full mt-6"></div>
         </div>
-
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          <!-- Hacemos el bucle con los datos de nuestro script -->
           <div
             v-for="item in menuItems"
             :key="item.name"
@@ -125,7 +174,6 @@ const scrollToSection = (elementId) => {
             <div
               class="w-16 h-16 beer-gradient rounded-full flex items-center justify-center mb-4 mx-auto"
             >
-              <!-- OJO: Esto no se verá, porque ya no usamos Font Awesome -->
               <i :class="item.icon" class="text-white text-2xl"></i>
             </div>
             <h3
@@ -140,5 +188,7 @@ const scrollToSection = (elementId) => {
         </div>
       </div>
     </section>
+
+    <!-- Aquí iría la sección de Contacto si la tuvieras -->
   </div>
 </template>

@@ -23,7 +23,7 @@ const navigationLinks = ref([
   }, // <-- Y esta de cierre }
 
   // Objeto 3: Sobre Nosotros (cambié el nombre para que coincida con el original)
-  { name: "Nosotros", href: "#nosotros" },
+  { name: "Nosotros", href: "/sobre-nosotros" },
 ]);
 </script>
 

@@ -54,7 +54,9 @@ onUnmounted(() => {
 <template>
   <header
     class="fixed w-full top-0 z-50 transition-all duration-300"
-    :class="scrolled ? 'glass-effect shadow-lg' : 'bg-transparent'"
+    :class="
+      scrolled ? 'bg-white/80 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+    "
   >
     <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
@@ -70,16 +72,25 @@ onUnmounted(() => {
             <a
               v-if="!item.children"
               :href="item.href"
-              class="font-medium text-white hover:text-yellow-300 px-3 py-2 rounded-md text-base"
+              class="font-medium px-3 py-2 rounded-md text-base transition-colors"
+              :class="
+                scrolled
+                  ? 'text-gray-800 hover:text-amber-600'
+                  : 'text-white hover:text-yellow-300'
+              "
             >
               {{ item.name }}
             </a>
 
-            <!-- Botón del Dropdown -->
             <button
               v-else
               @click="toggleDropdown(item.name)"
-              class="font-medium text-white hover:text-yellow-300 px-3 py-2 rounded-md text-base inline-flex items-center"
+              class="font-medium px-3 py-2 rounded-md text-base inline-flex items-center transition-colors"
+              :class="
+                scrolled
+                  ? 'text-gray-800 hover:text-amber-600'
+                  : 'text-white hover:text-yellow-300'
+              "
             >
               <span>{{ item.name }}</span>
               <svg class="ml-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -123,9 +134,12 @@ onUnmounted(() => {
         <div class="md:hidden flex items-center">
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-yellow-300 hover:bg-white/10 focus:outline-none"
-            aria-controls="mobile-menu"
-            :aria-expanded="mobileMenuOpen"
+            class="inline-flex items-center justify-center p-2 rounded-md transition-colors"
+            :class="
+              scrolled
+                ? 'text-gray-800 hover:bg-gray-200'
+                : 'text-white hover:bg-white/10'
+            "
           >
             <span class="sr-only">Abrir menú principal</span>
             <svg

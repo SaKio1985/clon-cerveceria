@@ -1,20 +1,51 @@
 // src/router/index.js
-import { createRouter, createWebHistory } from "vue-router";
-import HomePage from "../views/HomePage.vue";
 
+import { createRouter, createWebHistory } from "vue-router";
+
+// 1. Definimos las rutas usando alias y lazy loading para mejor rendimiento.
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/views/HomePage.vue"),
+  },
+  {
+    path: "/carta",
+    name: "carta",
+    component: () => import("@/views/CartaPage.vue"),
+  },
+  {
+    path: "/carta/barriles",
+    name: "carta-barriles",
+    component: () => import("@/views/CartaBarrilesPage.vue"),
+  },
+  {
+    path: "/carta/botellas",
+    name: "carta-botellas",
+    component: () => import("@/views/CartaBotellasPage.vue"),
+  },
+  {
+    path: "/carta/temporada",
+    name: "carta-temporada",
+    component: () => import("@/views/CartaTemporadaPage.vue"),
+  },
+  {
+    path: "/carta/para-comer",
+    name: "carta-para-comer",
+    component: () => import("@/views/CartaParaComerPage.vue"),
+  },
+  {
+    path: "/sobre-nosotros",
+    name: "sobre-nosotros",
+    component: () => import("@/views/SobreNosotros.vue"),
+  },
+];
+
+// 2. Aquí estaba el error principal: faltaba crear la instancia del router.
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    { path: "/", name: "home", component: HomePage },
-    // Añadimos las nuevas rutas para "La carta"
-    {
-      path: "/carta",
-      name: "carta",
-      // Creamos un componente para la página principal de la carta
-      component: () => import("../views/CartaPage.vue"),
-    },
-    // Aquí irían las rutas específicas si las necesitas
-    // { path: '/carta/barriles', ... },
-  ],
+  routes, // Usamos el array de rutas que definimos arriba
 });
+
+// 3. Exportamos la instancia del router para que la use main.js
 export default router;
