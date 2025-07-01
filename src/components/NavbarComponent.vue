@@ -65,12 +65,26 @@ onUnmounted(() => {
           <img class="h-12 w-auto" src="/Logo.avif" alt="Logo La Cerve" />
         </RouterLink>
 
-        <!-- === NAVEGACIÓN DE ESCRITORIO === -->
+        <!-- === NAVEGACIÓN DE ESCRITORIO (VERSIÓN CORREGIDA) === -->
         <div class="hidden md:flex md:items-center md:space-x-1">
           <div v-for="item in navItems" :key="item.name" class="relative">
-            <!-- Enlace Normal -->
+            <!-- CASO 1: Es una ruta de Vue Router (tiene la propiedad 'to') -->
+            <RouterLink
+              v-if="item.to"
+              :to="item.to"
+              class="font-medium px-3 py-2 rounded-md text-base transition-colors"
+              :class="
+                scrolled
+                  ? 'text-gray-800 hover:text-amber-600'
+                  : 'text-white hover:text-yellow-300'
+              "
+            >
+              {{ item.name }}
+            </RouterLink>
+
+            <!-- CASO 2: Es un enlace de ancla (tiene la propiedad 'href') -->
             <a
-              v-if="!item.children"
+              v-else-if="item.href"
               :href="item.href"
               class="font-medium px-3 py-2 rounded-md text-base transition-colors"
               :class="
@@ -82,8 +96,9 @@ onUnmounted(() => {
               {{ item.name }}
             </a>
 
+            <!-- CASO 3: Es un botón para el dropdown (tiene la propiedad 'children') -->
             <button
-              v-else
+              v-else-if="item.children"
               @click="toggleDropdown(item.name)"
               class="font-medium px-3 py-2 rounded-md text-base inline-flex items-center transition-colors"
               :class="
@@ -102,7 +117,7 @@ onUnmounted(() => {
               </svg>
             </button>
 
-            <!-- Menú Desplegable (Dropdown) -->
+            <!-- El Dropdown se queda igual, usando <RouterLink> -->
             <transition name="dropdown">
               <div
                 v-if="openDropdown === item.name"
@@ -110,7 +125,7 @@ onUnmounted(() => {
               >
                 <div class="py-2" @click.stop>
                   <RouterLink
-                    :to="item.href"
+                    :to="item.to"
                     class="font-bold block px-4 py-3 text-base text-gray-800 hover:bg-gray-100 hover:text-amber-600"
                   >
                     Ir a {{ item.name }}
@@ -119,7 +134,7 @@ onUnmounted(() => {
                   <RouterLink
                     v-for="child in item.children"
                     :key="child.name"
-                    :to="child.href"
+                    :to="child.to"
                     class="block px-4 py-3 text-base text-gray-700 hover:bg-gray-100 hover:text-amber-600"
                   >
                     {{ child.name }}

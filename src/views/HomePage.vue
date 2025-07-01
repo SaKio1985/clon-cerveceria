@@ -2,6 +2,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 // --- DATOS PARA LA SECCIÓN "NUESTRA HISTORIA" ---
 // IMPORTANTE: Asegúrate de tener estas imágenes en 'src/assets/images/'
@@ -10,6 +11,7 @@ import aboutImage1 from "@/assets/images/about-1.avif";
 import aboutImage2 from "@/assets/images/about-2.avif";
 import aboutImage3 from "@/assets/images/about-3.avif";
 
+const router = useRouter();
 const historyItems = ref([
   {
     text: "El 14 de Marzo del 1996 abrimos las puertas de la Cevecería Gilber's, desde entonces hemos trabajado con innumerables marcas de cerveza, consiguiendo ofrecer a nuestros clientes un alto nivel de calidad y satisfacción.",
@@ -54,15 +56,13 @@ const menuItems = ref([
 ]);
 
 // --- LÓGICA DE SCROLL ---
-const scrollToSection = (elementId) => {
-  const element = document.querySelector(elementId);
-  if (element) {
-    const offsetTop = element.offsetTop - 80;
-    window.scrollTo({
-      top: offsetTop,
-      behavior: "smooth",
-    });
-  }
+const verCarta = () => {
+  router.push("/carta/temporada");
+};
+
+const encontrar = () => {
+  // Primero navega a la página y luego el navegador se encargará del ancla
+  router.push("/sobre-nosotros#mapa");
 };
 </script>
 
@@ -77,30 +77,34 @@ const scrollToSection = (elementId) => {
     >
       <div class="container mx-auto px-4 text-center relative z-10">
         <div class="max-w-4xl mx-auto">
-          <h1
-            class="font-display text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
-          >
-            Bienvenidos a
-            <span class="text-transparent bg-clip-text beer-gradient"
-              >La Cerve</span
+          <h1 class="font-display font-bold text-white leading-tight">
+            <span class="block text-4xl md:text-5xl font-light mb-2"
+              >Bienvenidos a</span
             >
+            <span
+              class="text-6xl md:text-8xl text-transparent bg-clip-text beer-gradient"
+            >
+              La Cerve
+            </span>
           </h1>
+
           <p
-            class="text-xl md:text-2xl text-gray-300 mb-8 font-light leading-relaxed"
+            class="text-xl md:text-2xl text-gray-300 mt-8 mb-10 font-light leading-relaxed"
           >
             La cervecería más antigua de Salamanca. Desde 1996 ofreciendo la
             mejor experiencia cervecera con un ambiente familiar y una cocina
             excepcional.
           </p>
+
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              @click="scrollToSection('#carta')"
+              @click="verCarta"
               class="beer-gradient text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
             >
               Ver Nuestra Carta
             </button>
             <button
-              @click="scrollToSection('#contacto')"
+              @click="encontrar"
               class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300"
             >
               Encuéntranos

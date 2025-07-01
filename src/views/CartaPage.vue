@@ -1,69 +1,55 @@
-<script>
-export default {
-  name: "CartaView",
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-  data() {
-    return {
-      pageTitle: "La carta",
-      openingText: "ABRIMOS TODOS LOS DÍAS",
+// 1. La data ahora es una constante 'ref'
+const pageTitle = ref("La carta");
+const openingText = ref("ABRIMOS TODOS LOS DÍAS");
 
-      // Array de objetos para las secciones del menú
-      menuSections: [
-        {
-          id: 1,
-          title: "Cervezas de barril",
-          image:
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          route: "/cervezas-barril", // Para navegación futura
-        },
-        {
-          id: 2,
-          title: "Cervezas de temporada",
-          image:
-            "https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          route: "/cervezas-temporada",
-        },
-        {
-          id: 3,
-          title: "Cervezas en botella",
-          image:
-            "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          route: "/cervezas-botella",
-        },
-        {
-          id: 4,
-          title: "Para comer",
-          image:
-            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          route: "/comida",
-        },
-      ],
-    };
+const menuSections = ref([
+  {
+    id: 1,
+    title: "Cervezas de barril",
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    route: "/carta/barriles",
   },
-
-  methods: {
-    handleSectionClick(section) {
-      // Navegación con Vue Router
-      this.$router.push(section.route);
-
-      // O si prefieres emitir un evento al padre:
-      // this.$emit('section-selected', section);
-    },
+  {
+    id: 2,
+    title: "Cervezas de temporada",
+    image:
+      "https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    route: "/carta/temporada",
   },
-
-  mounted() {
-    console.log("Vista de La Cerve cargada correctamente");
+  {
+    id: 3,
+    title: "Cervezas en botella",
+    image:
+      "https://images.unsplash.com/photo-1581775099013-0f98f2f016c7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    route: "/carta/botellas",
   },
+  {
+    id: 4,
+    title: "Para comer",
+    image:
+      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    route: "/carta/para-comer",
+  },
+]);
+
+const router = useRouter(); // Obtenemos el router
+
+const handleSectionClick = (section) => {
+  router.push(section.route);
 };
 </script>
 
 <template>
-  <div class="carta-view">
+  <!-- El template se queda exactamente igual, no necesita cambios -->
+  <div class="carta-view pt-32">
     <div class="container">
       <h1 class="main-title fade-in">{{ pageTitle }}</h1>
-
       <p class="opening-text fade-in">{{ openingText }}</p>
-
       <div
         v-for="(section, index) in menuSections"
         :key="section.id"

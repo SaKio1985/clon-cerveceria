@@ -51,7 +51,7 @@ const handleHide = () => {
       </header>
 
       <!-- === MAPA DE GOOGLE === -->
-      <section class="mb-20">
+      <section id="mapa" class="mb-20">
         <div
           class="w-full h-96 rounded-lg shadow-xl overflow-hidden flex justify-center"
         >

@@ -7,23 +7,20 @@ import FooterComponent from "@/components/FooterComponent.vue";
 
 const navigationLinks = ref([
   // Objeto 1: Inicio
-  { name: "Inicio", href: "#inicio" },
+  { name: "Inicio", to: "/" },
 
   // Objeto 2: La Carta (con sus hijos dentro)
   {
-    // <-- Faltaba esta llave de apertura {
     name: "La carta",
-    href: "/carta", // Enlace principal
+    to: "/carta", // Enlace principal
     children: [
-      { name: "Barriles", href: "/carta/barriles" },
-      { name: "Botellas", href: "/carta/botellas" },
-      { name: "Cervezas de temporada", href: "/carta/temporada" },
-      { name: "Para comer", href: "/carta/para-comer" },
+      { name: "Barriles", to: "/carta/barriles" },
+      { name: "Botellas", to: "/carta/botellas" },
+      { name: "Cervezas de temporada", to: "/carta/temporada" },
+      { name: "Para comer", to: "/carta/para-comer" },
     ],
-  }, // <-- Y esta de cierre }
-
-  // Objeto 3: Sobre Nosotros (cambié el nombre para que coincida con el original)
-  { name: "Nosotros", href: "/sobre-nosotros" },
+  },
+  { name: "Nosotros", to: "/sobre-nosotros" },
 ]);
 </script>
 
