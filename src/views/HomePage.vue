@@ -12,10 +12,10 @@ import aboutImage2 from "@/assets/images/about-2.avif";
 import aboutImage3 from "@/assets/images/about-3.avif";
 
 // --- IMPORTAR IMÁGENES DE PLATOS ---
-import elPerreteImg from "@/assets/images/platos/el-perrete.avif";
-import calamaresImg from "@/assets/images/platos/calamares.avif";
-import pizzotasImg from "@/assets/images/platos/pizzotas.avif";
-import burgerImg from "@/assets/images/platos/burger.avif";
+import elPerreteImg from "@/assets/images/platos/el-perrete.png";
+import calamaresImg from "@/assets/images/platos/calamares.png";
+import pizzotasImg from "@/assets/images/platos/pizzotas.png";
+import burgerImg from "@/assets/images/platos/burger.png";
 
 const router = useRouter();
 const historyItems = ref([
@@ -67,7 +67,7 @@ const menuItems = ref([
 
 // --- LÓGICA DE SCROLL ---
 const verCarta = () => {
-  router.push("/carta/temporada");
+  router.push("/carta");
 };
 
 const encontrar = () => {
@@ -191,6 +191,8 @@ const closeModal = () => {
           </h2>
           <div class="w-24 h-1 beer-gradient mx-auto rounded-full mt-6"></div>
         </div>
+
+        <!-- CAMBIO: El bucle ahora usa 'menuItems' y la variable 'item' -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           <div
             v-for="item in menuItems"
