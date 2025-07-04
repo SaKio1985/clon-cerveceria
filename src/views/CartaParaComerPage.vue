@@ -1,9 +1,11 @@
 <!-- src/views/CartaParaComerPage.vue -->
 <script setup>
 import { ref } from "vue";
+import { useCartStore } from "@/stores/cartStore";
 
 // 1. Nueva estructura de datos: un array de CATEGORÍAS.
 // Cada categoría tiene un título y una lista de platos.
+const cart = useCartStore();
 const menuCompleto = ref([
   {
     titulo: "Especialidades",
@@ -162,6 +164,7 @@ const menuCompleto = ref([
 ]);
 </script>
 
+<!-- src/views/CartaParaComerPage.vue -->
 <template>
   <div class="pt-32 pb-24 bg-gray-50">
     <div class="container mx-auto px-4">
@@ -171,7 +174,6 @@ const menuCompleto = ref([
         :key="categoria.titulo"
         class="mb-12"
       >
-        <!-- Título de la Categoría -->
         <h2
           class="font-display text-4xl font-bold text-center mb-4"
           :class="categoria.tituloClase || 'text-gray-900'"
@@ -182,7 +184,6 @@ const menuCompleto = ref([
           {{ categoria.nota }}
         </p>
 
-        <!-- Contenedor para los platos de la categoría -->
         <div class="space-y-4">
           <!-- Renderizado para platos normales -->
           <div
@@ -204,8 +205,6 @@ const menuCompleto = ref([
               <p v-if="plato.descripcion" class="text-sm text-gray-500 italic">
                 {{ plato.descripcion }}
               </p>
-
-              <!-- Renderizado para múltiples precios (Ración / 1/2 Ración) -->
               <div v-if="plato.precios" class="flex gap-6 mt-2">
                 <div v-for="precio in plato.precios" :key="precio.tipo">
                   <span class="text-sm text-gray-500">{{ precio.tipo }}</span>
@@ -218,12 +217,31 @@ const menuCompleto = ref([
                 {{ plato.nota }}
               </p>
             </div>
-            <p
-              v-if="plato.precio"
-              class="font-bold text-xl text-gray-800 whitespace-nowrap"
-            >
-              {{ plato.precio.toFixed(2) }}€
-            </p>
+            <div class="flex items-center gap-4 flex-shrink-0">
+              <p v-if="plato.precio" class="font-bold text-xl text-gray-800">
+                {{ plato.precio.toFixed(2) }}€
+              </p>
+              <!-- CAMBIO: Botón para añadir platos normales -->
+              <button
+                v-if="plato.precio"
+                @click="cart.addItem(plato)"
+                class="bg-amber-500 text-white rounded-full p-2 hover:bg-amber-600 transition"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
 
           <!-- Renderizado para opciones (Hamburguesas, Sandwiches) -->
@@ -234,7 +252,7 @@ const menuCompleto = ref([
             <div
               v-for="opcion in categoria.opciones"
               :key="opcion.id"
-              class="flex justify-between items-baseline"
+              class="flex justify-between items-center"
             >
               <p v-if="opcion.nombre" class="text-lg">
                 <span class="font-bold">{{ opcion.nombre }}</span>
@@ -245,15 +263,37 @@ const menuCompleto = ref([
                   - {{ opcion.descripcion }}</span
                 >
               </p>
-              <p v-if="opcion.precio" class="font-bold text-xl">
-                {{ opcion.precio.toFixed(2) }}€
-              </p>
               <p
                 v-if="opcion.nota"
                 class="w-full text-center font-semibold text-amber-700"
               >
                 {{ opcion.nota }}
               </p>
+              <div
+                v-if="opcion.precio"
+                class="flex items-center gap-4 flex-shrink-0"
+              >
+                <p class="font-bold text-xl">{{ opcion.precio.toFixed(2) }}€</p>
+                <!-- CAMBIO: Botón para añadir opciones -->
+                <button
+                  @click="cart.addItem(opcion)"
+                  class="bg-amber-500 text-white rounded-full p-2 hover:bg-amber-600 transition"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -267,7 +307,36 @@ const menuCompleto = ref([
                 {{ sabor }}
               </li>
             </ul>
-            <p class="font-bold text-2xl">{{ categoria.precio.toFixed(2) }}€</p>
+            <div class="flex items-center gap-4 flex-shrink-0">
+              <p class="font-bold text-2xl">
+                {{ categoria.precio.toFixed(2) }}€
+              </p>
+              <!-- CAMBIO: Botón para añadir la Pizzota (un solo item) -->
+              <button
+                @click="
+                  cart.addItem({
+                    id: 'pizzota',
+                    nombre: `Pizzota (${categoria.sabores.join(', ')})`,
+                    price: categoria.precio,
+                  })
+                "
+                class="bg-amber-500 text-white rounded-full p-2 hover:bg-amber-600 transition"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
