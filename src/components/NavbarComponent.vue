@@ -55,26 +55,28 @@ onUnmounted(() => {
   <header
     class="fixed w-full top-0 z-50 transition-all duration-300"
     :class="
-      scrolled ? 'bg-white/80 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+      scrolled || route.path !== '/'
+        ? 'bg-white/80 backdrop-blur-sm shadow-lg'
+        : 'bg-transparent'
     "
   >
     <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-24">
         <!-- === LOGO === -->
         <RouterLink to="/" @click="closeDropdown">
-          <img class="h-12 w-auto" src="/Logo.avif" alt="Logo La Cerve" />
+          <img class="h-16 w-auto" src="/Logo.avif" alt="Logo La Cerve" />
         </RouterLink>
 
         <!-- === NAVEGACIÓN DE ESCRITORIO (VERSIÓN CORREGIDA) === -->
-        <div class="hidden md:flex md:items-center md:space-x-1">
+        <div class="hidden md:flex md:items-center md:space-x-2">
           <div v-for="item in navItems" :key="item.name" class="relative">
             <!-- CASO 1: Es una ruta de Vue Router (tiene la propiedad 'to') -->
             <RouterLink
               v-if="item.to"
               :to="item.to"
-              class="font-medium px-3 py-2 rounded-md text-base transition-colors"
+              class="font-medium px-4 py-2 rounded-md text-base transition-colors"
               :class="
-                scrolled
+                scrolled || route.path !== '/'
                   ? 'text-gray-800 hover:text-amber-600'
                   : 'text-white hover:text-yellow-300'
               "
@@ -151,7 +153,7 @@ onUnmounted(() => {
             @click="mobileMenuOpen = !mobileMenuOpen"
             class="inline-flex items-center justify-center p-2 rounded-md transition-colors"
             :class="
-              scrolled
+              scrolled || route.path !== '/'
                 ? 'text-gray-800 hover:bg-gray-200'
                 : 'text-white hover:bg-white/10'
             "
