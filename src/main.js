@@ -1,7 +1,8 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
-import { createPinia } from "pinia";
+
 // Importamos los estilos globales que crearemos en el siguiente paso
 import "./assets/main.css";
 
