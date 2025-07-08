@@ -39,6 +39,11 @@ const routes = [
     name: "sobre-nosotros",
     component: () => import("@/views/SobreNosotros.vue"),
   },
+  {
+    path: "/carrito",
+    name: "carrito",
+    component: () => import("@/views/CarritoPage.vue"),
+  },
 ];
 
 // 2. Aquí estaba el error principal: faltaba crear la instancia del router.

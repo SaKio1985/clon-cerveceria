@@ -21,6 +21,7 @@ const navigationLinks = ref([
     ],
   },
   { name: "Nosotros", to: "/sobre-nosotros" },
+  { name: "Carrito", to: "/carrito" },
 ]);
 </script>
 

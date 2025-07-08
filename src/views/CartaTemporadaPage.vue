@@ -62,8 +62,8 @@ const cervezasTemporada = ref([
 ]);
 
 // Estado reactivo para filtros (opcional, pero buena práctica)
-const filtroActivo = ref("todos");
-const mostrarFiltros = ref(false);
+//const filtroActivo = ref("todos");
+//const mostrarFiltros = ref(false);
 
 // Propiedad computada para mostrar solo las cervezas disponibles
 const cervezasDisponibles = computed(() => {

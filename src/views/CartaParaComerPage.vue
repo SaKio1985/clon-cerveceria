@@ -317,7 +317,7 @@ const menuCompleto = ref([
                   cart.addItem({
                     id: 'pizzota',
                     nombre: `Pizzota (${categoria.sabores.join(', ')})`,
-                    price: categoria.precio,
+                    precio: categoria.precio,
                   })
                 "
                 class="bg-amber-500 text-white rounded-full p-2 hover:bg-amber-600 transition"

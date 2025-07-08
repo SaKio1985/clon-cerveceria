@@ -13,7 +13,7 @@ export const useCartStore = defineStore("cart", () => {
   // Getter para el precio total
   const totalPrice = computed(() => {
     return items.value
-      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .reduce((total, item) => total + item.precio * item.quantity, 0)
       .toFixed(2);
   });
 
