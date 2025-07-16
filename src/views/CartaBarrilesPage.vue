@@ -2,6 +2,9 @@
 <script setup>
 import { ref } from "vue";
 
+import { useCartStore } from "@/stores/cartStore";
+const cart = useCartStore();
+
 // 1. Ponemos los datos directamente aquí, dentro de una 'ref' de Vue.
 const barriles = ref([
   {
@@ -126,17 +129,55 @@ const barriles = ref([
                 </li>
               </ul>
             </div>
-            <!-- Precios -->
-            <div class="bg-beer-50 p-4 rounded-lg text-center flex-shrink-0">
-              <h4 class="font-bold text-beer-800 mb-2">Precios</h4>
-              <p class="text-lg">
-                <span class="font-semibold">Media Pinta:</span>
-                {{ barril.precios.mediaPinta }}
-              </p>
-              <p class="text-lg">
-                <span class="font-semibold">Pinta:</span>
-                {{ barril.precios.pinta }}
-              </p>
+            <!-- Precios y Botones de Añadir -->
+            <div
+              class="bg-beer-50 p-4 rounded-lg text-center flex-shrink-0 flex flex-col gap-4"
+            >
+              <!-- Opción MEDIA PINTA -->
+              <div class="flex flex-col items-center">
+                <p class="text-lg">
+                  <span class="font-semibold">Media Pinta:</span>
+                  {{ barril.precios.mediaPinta }}
+                </p>
+                <button
+                  @click="
+                    cart.addItem({
+                      id: `${barril.id}-media`,
+                      nombre: `${barril.nombre} (1/2 Pinta)`,
+                      precio: parseFloat(
+                        barril.precios.mediaPinta.replace(',', '.')
+                      ),
+                      imagen: barril.imagen,
+                    })
+                  "
+                  class="mt-1 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold hover:bg-amber-600 transition-colors"
+                >
+                  Añadir
+                </button>
+              </div>
+
+              <!-- Opción PINTA -->
+              <div class="flex flex-col items-center">
+                <p class="text-lg">
+                  <span class="font-semibold">Pinta:</span>
+                  {{ barril.precios.pinta }}
+                </p>
+                <button
+                  @click="
+                    cart.addItem({
+                      id: `${barril.id}-pinta`,
+                      nombre: `${barril.nombre} (Pinta)`,
+                      precio: parseFloat(
+                        barril.precios.pinta.replace(',', '.')
+                      ),
+                      imagen: barril.imagen,
+                    })
+                  "
+                  class="mt-1 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold hover:bg-amber-600 transition-colors"
+                >
+                  Añadir
+                </button>
+              </div>
             </div>
           </div>
         </div>

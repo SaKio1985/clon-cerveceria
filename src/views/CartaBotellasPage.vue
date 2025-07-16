@@ -1,6 +1,9 @@
 <!-- src/views/CartaBotellasPage.vue -->
 <script setup>
 import { ref } from "vue";
+import { useCartStore } from "@/stores/cartStore";
+
+const cart = useCartStore();
 
 // 1. Ponemos los datos directamente aquí, dentro de una 'ref' de Vue.
 const botellas = ref([
@@ -125,67 +128,69 @@ const botellas = ref([
 </script>
 
 <template>
-  <div class="pt-32 container mx-auto px-4">
+  <div class="pt-32 pb-24 container mx-auto px-4">
     <header class="mb-12 text-center">
       <h1 class="font-display text-5xl font-bold">Cervezas de Botella</h1>
     </header>
 
+    <!-- Contenedor principal de las tarjetas -->
     <div class="space-y-8">
-      <!-- ============================================= -->
-      <!-- === INICIO DEL CAMBIO ESTRUCTURAL === -->
-      <!-- ============================================= -->
-
-      <!-- Usamos <template> para agrupar elementos dentro del bucle -->
-      <template v-for="botella in botellas" :key="botella.id">
-        <!-- 1. La tarjeta de la botella (el código es el mismo, solo está dentro del <template>) -->
-        <div
-          class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row gap-6 items-center"
-        >
-          <!-- Columna de la Imagen -->
-          <div class="md:w-1/4 flex-shrink-0 text-center">
-            <img
-              :src="botella.imagen"
-              :alt="`Logo de ${botella.nombre}`"
-              class="mx-auto h-48 object-contain"
-            />
-          </div>
-          <!-- Columna del Contenido -->
-          <div class="md:w-3/4">
-            <h2 class="font-display text-3xl font-bold text-gray-900">
-              {{ botella.nombre }}
-            </h2>
-            <p class="text-amber-700 font-semibold mb-3">
-              {{ botella.alcohol }} / {{ botella.volumen }}
-            </p>
-            <p class="text-gray-600 mb-4">{{ botella.descripcion }}</p>
-            <div v-if="botella.precio" class="mt-4">
-              <span class="text-2xl font-bold text-beer-700"
-                >{{ botella.precio }}€</span
-              >
-            </div>
-          </div>
+      <!-- Bucle v-for para crear una tarjeta por cada cerveza -->
+      <div
+        v-for="botella in botellas"
+        :key="botella.id"
+        class="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row gap-6 items-center"
+      >
+        <!-- Columna de la Imagen -->
+        <div class="md:w-1/4 flex-shrink-0 text-center">
+          <img
+            :src="botella.imagen"
+            :alt="`Logo de ${botella.nombre}`"
+            class="mx-auto h-48 object-contain"
+          />
         </div>
 
-        <!-- 2. El separador (el código es el mismo, pero ahora está en el lugar correcto) -->
-        <!-- Como ahora está DENTRO del bucle, la variable 'botella' sí existe y el v-if funciona -->
-        <div v-if="botella.id === 4" class="py-8 my-4">
-          <div class="relative text-center">
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center">
-              <span class="bg-gray-50 px-4 text-2xl font-semibold text-gray-600"
-                >Sin alcohol y 0,0</span
-              >
-            </div>
-          </div>
-        </div>
-      </template>
-      <!-- Fin de la etiqueta <template> del bucle -->
+        <!-- Columna del Contenido -->
+        <div class="md:w-3/4">
+          <!-- Título y Subtítulo -->
+          <h2 class="font-display text-3xl font-bold text-gray-900">
+            {{ botella.nombre }}
+          </h2>
+          <p class="text-amber-700 font-semibold mb-3">
+            {{ botella.alcohol }} / {{ botella.volumen }}
+          </p>
 
-      <!-- ============================================= -->
-      <!-- === FIN DEL CAMBIO ESTRUCTURAL === -->
-      <!-- ============================================= -->
+          <!-- Descripción -->
+          <p class="text-gray-600 mb-4">{{ botella.descripcion }}</p>
+
+          <!-- === INICIO DEL CAMBIO: SECCIÓN DE PRECIO Y BOTÓN === -->
+          <div
+            v-if="botella.precio"
+            class="mt-6 flex justify-between items-center border-t pt-4"
+          >
+            <!-- Precio -->
+            <span class="text-2xl font-bold text-beer-700"
+              >{{ botella.precio.toFixed(2) }}€</span
+            >
+
+            <!-- Botón de Añadir -->
+            <button
+              @click="
+                cart.addItem({
+                  id: `botella-${botella.id}`,
+                  nombre: botella.nombre,
+                  precio: botella.precio,
+                  imagen: botella.imagen,
+                })
+              "
+              class="bg-amber-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-amber-600 active:bg-amber-700 transition-colors"
+            >
+              Añadir
+            </button>
+          </div>
+          <!-- === FIN DEL CAMBIO === -->
+        </div>
+      </div>
     </div>
   </div>
 </template>

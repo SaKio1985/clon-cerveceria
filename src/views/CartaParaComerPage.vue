@@ -78,9 +78,9 @@ const menuCompleto = ref([
     nota: "Las hamburguesas llevan ketchup, mostaza y van acompañadas de patatas",
     // Estructura especial para opciones con precios diferentes
     opciones: [
-      { id: "ham1", nombre: "Normal", precio: 8.0 },
-      { id: "ham2", nombre: "+ Queso", precio: 8.5 },
-      { id: "ham3", nombre: "+ Bacon y Queso", precio: 9.0 },
+      { id: "ham1", nombre: "Hamburguesa normal", precio: 8.0 },
+      { id: "ham2", nombre: "Hamburguesa + Jamón y queso", precio: 8.5 },
+      { id: "ham3", nombre: "Hamburguesa + Bacon y queso", precio: 9.0 },
       { id: "ham4", nota: "Por solo 3€ más pide tu 1/3 Kg de carne" },
     ],
   },
@@ -90,7 +90,7 @@ const menuCompleto = ref([
     opciones: [
       {
         id: "san1",
-        nombre: "Vegetal",
+        nombre: "Sandwich vegetal",
         descripcion:
           "Brotes tiernos, tomate, Atún, pepinillo agridulce, espárragos y mahonesa",
         precio: 8.5,

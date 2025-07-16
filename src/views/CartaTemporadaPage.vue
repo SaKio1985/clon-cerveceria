@@ -1,10 +1,10 @@
 <!-- src/views/CartaTemporadaPage.vue -->
-
-<!-- ======================= -->
-<!-- === 1. SCRIPT PRIMERO === -->
-<!-- ======================= -->
 <script setup>
 import { ref, computed } from "vue";
+
+import { useCartStore } from "@/stores/cartStore";
+
+const cart = useCartStore();
 
 // Datos de la página
 const paginaInfo = ref({
@@ -141,18 +141,50 @@ const handleImageError = (event) => {
             </div>
           </div>
 
-          <div class="flex justify-end items-center gap-4 border-t pt-4 mt-4">
+          <!-- Precios y Botones de Añadir -->
+          <div class="flex justify-end items-center gap-6 border-t pt-4 mt-4">
+            <!-- Opción MEDIA PINTA -->
             <div class="text-center">
               <p class="text-sm text-gray-500">1/2 Pinta</p>
               <p class="text-lg font-bold text-gray-800">
                 {{ cerveza.precios.mediaPinta }}
               </p>
+              <button
+                @click="
+                  cart.addItem({
+                    id: `${cerveza.id}-media`,
+                    nombre: `${cerveza.nombre} (1/2 Pinta)`,
+                    precio: parseFloat(
+                      cerveza.precios.mediaPinta.replace(',', '.')
+                    ),
+                    imagen: cerveza.imagen,
+                  })
+                "
+                class="mt-1 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold hover:bg-amber-600 active:bg-amber-700 transition-colors"
+              >
+                Añadir
+              </button>
             </div>
+
+            <!-- Opción PINTA -->
             <div class="text-center">
               <p class="text-sm text-gray-500">Pinta</p>
               <p class="text-lg font-bold text-gray-800">
                 {{ cerveza.precios.pinta }}
               </p>
+              <button
+                @click="
+                  cart.addItem({
+                    id: `${cerveza.id}-pinta`,
+                    nombre: `${cerveza.nombre} (Pinta)`,
+                    precio: parseFloat(cerveza.precios.pinta.replace(',', '.')),
+                    imagen: cerveza.imagen,
+                  })
+                "
+                class="mt-1 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold hover:bg-amber-600 active:bg-amber-700 transition-colors"
+              >
+                Añadir
+              </button>
             </div>
           </div>
         </div>
